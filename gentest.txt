@@ -73,7 +73,7 @@ PTX ffffffffffffffffffffff
 GEN
 ---------------
 
-The first non-empty line starts with the word MODE foloowed by a
+The first non-empty line starts with the word MODE followed by a
 space and a three or four character mode designator, for example, 
 'CCM', 'GCM', 'EAX', 'XTS' or 'EME2'. Lines prior to this line 
 are ignored so they can contain descriptions of the file.
