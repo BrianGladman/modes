@@ -184,6 +184,7 @@
     <ClInclude Include="..\..\aes\brg_types.h" />
     <ClInclude Include="..\cmac.h" />
     <ClInclude Include="..\mode_hdr.h" />
+    <ClInclude Include="..\testvec.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

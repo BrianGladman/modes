@@ -49,13 +49,13 @@ void cmac_data(unsigned char buf[], unsigned long len, cmac_ctx ctx[1])
 				*UNIT_PTR(UI8_PTR(ctx->txt_cbc) + b_pos) ^= *UNIT_PTR(buf + cnt);
 				cnt += BUF_INC; b_pos += BUF_INC;
 			}
+		}
 
-			while(cnt + BLOCK_SIZE <= len)
-			{
-				aes_encrypt(UI8_PTR(ctx->txt_cbc), UI8_PTR(ctx->txt_cbc), ctx->aes);
-				xor_block_aligned(ctx->txt_cbc, ctx->txt_cbc, buf + cnt);
-				cnt += BLOCK_SIZE;
-			}
+		while(cnt + BLOCK_SIZE <= len)
+		{
+			aes_encrypt(UI8_PTR(ctx->txt_cbc), UI8_PTR(ctx->txt_cbc), ctx->aes);
+			xor_block_aligned(ctx->txt_cbc, ctx->txt_cbc, buf + cnt);
+			cnt += BLOCK_SIZE;
 		}
     }
     else

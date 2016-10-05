@@ -42,20 +42,20 @@ void omac_data(unsigned char buf[], unsigned long len, omac_ctx ctx[1])
         while(cnt < len && (b_pos & BUF_ADRMASK))
             UI8_PTR(ctx->txt_cbc)[b_pos++] ^= buf[cnt++];
 
-        if(cnt + BLOCK_SIZE <= len)
-        {            
-            while(cnt + BUF_INC <= len && b_pos <= BLOCK_SIZE - BUF_INC)
-            {
-                *UNIT_PTR(UI8_PTR(ctx->txt_cbc) + b_pos) ^= *UNIT_PTR(buf + cnt);
-                cnt += BUF_INC; b_pos += BUF_INC;
-            }
+		if(cnt + BLOCK_SIZE <= len)
+		{
+			while(cnt + BUF_INC <= len && b_pos <= BLOCK_SIZE - BUF_INC)
+			{
+				*UNIT_PTR(UI8_PTR(ctx->txt_cbc) + b_pos) ^= *UNIT_PTR(buf + cnt);
+				cnt += BUF_INC; b_pos += BUF_INC;
+			}
+		}
 
-            while(cnt + BLOCK_SIZE <= len)
-            {
-                aes_encrypt(UI8_PTR(ctx->txt_cbc), UI8_PTR(ctx->txt_cbc), ctx->aes);
-                xor_block_aligned(ctx->txt_cbc, ctx->txt_cbc, buf + cnt);
-                cnt += BLOCK_SIZE;
-            }
+        while(cnt + BLOCK_SIZE <= len)
+        {
+            aes_encrypt(UI8_PTR(ctx->txt_cbc), UI8_PTR(ctx->txt_cbc), ctx->aes);
+            xor_block_aligned(ctx->txt_cbc, ctx->txt_cbc, buf + cnt);
+            cnt += BLOCK_SIZE;
         }
     }
     else

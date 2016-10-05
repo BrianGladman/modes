@@ -31,6 +31,39 @@
 #include "testvec.h"
 #include "omac.h"
 
+static unsigned int rand32(void)
+{
+	static unsigned int   r4, r_cnt = -1, w = 521288629, z = 362436069;
+
+	z = 36969 * (z & 65535) + (z >> 16);
+	w = 18000 * (w & 65535) + (w >> 16);
+
+	r_cnt = 0; r4 = (z << 16) + w; return r4;
+}
+
+static unsigned char rand8(void)
+{
+	static unsigned int   r4, r_cnt = 4;
+
+	if(r_cnt == 4)
+	{
+		r4 = rand32(); r_cnt = 0;
+	}
+
+	return (char)(r4 >> (8 * r_cnt++));
+}
+
+// fill a block with random charactrers
+
+void block_rfill(unsigned char l[], unsigned int len)
+{
+	unsigned int  i;
+
+	for(i = 0; i < len; ++i)
+
+		l[i] = rand8();
+}
+
 const char *t_name[] = {
 	"KEY", "MSG", "TAG", "VEC", "GEN", "END"
 };
@@ -113,6 +146,48 @@ int main(int argc, char *argv[])
 		do_test(argv[1], argv[2], argv[3], 1);
 	else
 		std::cout << std::endl << "usage: input_directory output_directory mode_name";
-	std::cout << std::endl << std::endl;
+	std::cout << std::endl;
+
+	// test incremental use
+	omac_ctx ctx[1];
+	uint8_t key[16], data[1024], tag0[16];
+	block_rfill(key, 16);
+	block_rfill(data, 1024);
+
+	omac_init(key, 16, ctx);
+	omac_data(data, 1024, ctx);
+	omac_end(tag0, ctx);
+
+	int err = 0;
+	for(int i = 0; i < 100; ++i)
+	{
+		uint8_t  tag[16];
+		int rpos[32];
+		for(int i = 0; i < 32; ++i)
+			rpos[i] = rand32() % 32;
+
+		omac_init(key, 16, ctx);
+		uint8_t *dp = data;
+		for(int i = 0; i < 32; ++i)
+		{
+			omac_data(dp, rpos[i], ctx);
+			dp += rpos[i];
+		}
+		omac_data(dp, data + 1024 - dp, ctx);
+		omac_end(tag, ctx);
+		if(memcmp(tag0, tag, 16))
+		{
+			err += 1;
+			for(unsigned int i = 0; i < 16; ++i)
+				std::cout << std::setw(2) << std::setfill('0') << std::hex << (unsigned int)tag0[i];
+			std::cout << std::endl;
+			for(unsigned int i = 0; i < 16; ++i)
+				std::cout << std::setw(2) << std::setfill('0') << std::hex << (unsigned int)tag[i];
+			std::cout << std::endl;
+		}
+	}
+	if(err == 0)
+		std::cout << "Incremental message authntication passed" << std::endl << std::endl;
+
 	return 0;
 }
