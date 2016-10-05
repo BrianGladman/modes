@@ -34,12 +34,15 @@ void omac_data(unsigned char buf[], unsigned long len, omac_ctx ctx[1])
     if(!len)
         return;
 
+	if (ctx->txt_cnt && !b_pos)
+		b_pos = BLOCK_SIZE;
+
     if(!((buf - (UI8_PTR(ctx->txt_cbc) + b_pos)) & BUF_ADRMASK))
     {
         while(cnt < len && (b_pos & BUF_ADRMASK))
             UI8_PTR(ctx->txt_cbc)[b_pos++] ^= buf[cnt++];
 
-        while(cnt + BLOCK_SIZE <= len)
+        if(cnt + BLOCK_SIZE <= len)
         {            
             while(cnt + BUF_INC <= len && b_pos <= BLOCK_SIZE - BUF_INC)
             {
@@ -57,7 +60,7 @@ void omac_data(unsigned char buf[], unsigned long len, omac_ctx ctx[1])
     }
     else
     {
-        while(cnt < len && b_pos < BLOCK_SIZE)
+        while(cnt < len && (b_pos & BLK_ADR_MASK))
             UI8_PTR(ctx->txt_cbc)[b_pos++] ^= buf[cnt++];
         
         while(cnt + BLOCK_SIZE <= len)

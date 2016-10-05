@@ -34,30 +34,33 @@ void cmac_data(unsigned char buf[], unsigned long len, cmac_ctx ctx[1])
     if(!len)
         return;
 
-    if(!((buf - (UI8_PTR(ctx->txt_cbc) + b_pos)) & BUF_ADRMASK))
+	if(ctx->txt_cnt && !b_pos)
+		b_pos = BLOCK_SIZE;
+
+	if(!((buf - (UI8_PTR(ctx->txt_cbc) + b_pos)) & BUF_ADRMASK))
     {
-        while(cnt < len && (b_pos & BUF_ADRMASK))
-            UI8_PTR(ctx->txt_cbc)[b_pos++] ^= buf[cnt++];
+		while (cnt < len && (b_pos & BUF_ADRMASK))
+			UI8_PTR(ctx->txt_cbc)[b_pos++] ^= buf[cnt++];
 
-        while(cnt + BLOCK_SIZE <= len)
-        {            
-            while(cnt + BUF_INC <= len && b_pos <= BLOCK_SIZE - BUF_INC)
-            {
-                *UNIT_PTR(UI8_PTR(ctx->txt_cbc) + b_pos) ^= *UNIT_PTR(buf + cnt);
-                cnt += BUF_INC; b_pos += BUF_INC;
-            }
+		if(cnt + BLOCK_SIZE <= len)
+		{
+			while(cnt + BUF_INC <= len && b_pos <= BLOCK_SIZE - BUF_INC)
+			{
+				*UNIT_PTR(UI8_PTR(ctx->txt_cbc) + b_pos) ^= *UNIT_PTR(buf + cnt);
+				cnt += BUF_INC; b_pos += BUF_INC;
+			}
 
-            while(cnt + BLOCK_SIZE <= len)
-            {
-                aes_encrypt(UI8_PTR(ctx->txt_cbc), UI8_PTR(ctx->txt_cbc), ctx->aes);
-                xor_block_aligned(ctx->txt_cbc, ctx->txt_cbc, buf + cnt);
-                cnt += BLOCK_SIZE;
-            }
-        }
+			while(cnt + BLOCK_SIZE <= len)
+			{
+				aes_encrypt(UI8_PTR(ctx->txt_cbc), UI8_PTR(ctx->txt_cbc), ctx->aes);
+				xor_block_aligned(ctx->txt_cbc, ctx->txt_cbc, buf + cnt);
+				cnt += BLOCK_SIZE;
+			}
+		}
     }
     else
     {
-        while(cnt < len && b_pos < BLOCK_SIZE)
+		while(cnt < len && (b_pos & BLK_ADR_MASK))
             UI8_PTR(ctx->txt_cbc)[b_pos++] ^= buf[cnt++];
         
         while(cnt + BLOCK_SIZE <= len)
