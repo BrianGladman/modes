@@ -22,6 +22,7 @@
     <ProjectGuid>{3182A85B-6C3B-4AB1-8120-F038C4A90897}</ProjectGuid>
     <RootNamespace>test_modes_inc</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
