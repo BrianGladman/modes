@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\eme2.c" />
+    <ClCompile Include="..\gf_mulx.c" />
     <ClCompile Include="..\testvec.cpp" />
     <ClCompile Include="test_eme2.cpp" />
   </ItemGroup>
@@ -161,6 +162,7 @@
     <ClInclude Include="..\..\aes\brg_endian.h" />
     <ClInclude Include="..\..\aes\brg_types.h" />
     <ClInclude Include="..\eme2.h" />
+    <ClInclude Include="..\gf_mulx.h" />
     <ClInclude Include="..\testvec.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

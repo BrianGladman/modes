@@ -20,6 +20,9 @@
     <ClCompile Include="..\testvec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\gf_mulx.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\xts.h">
@@ -35,6 +38,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\testvec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gf_mulx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\gf_mulx.c" />
     <ClCompile Include="..\testvec.cpp" />
     <ClCompile Include="..\xts.c" />
     <ClCompile Include="test_xts.cpp" />
@@ -27,6 +28,7 @@
     <ClInclude Include="..\..\aes\aes.h" />
     <ClInclude Include="..\..\aes\brg_endian.h" />
     <ClInclude Include="..\..\aes\brg_types.h" />
+    <ClInclude Include="..\gf_mulx.h" />
     <ClInclude Include="..\testvec.h" />
     <ClInclude Include="..\xts.h" />
   </ItemGroup>
