@@ -27,6 +27,7 @@
 
 #include "mode_hdr.h"
 #include "eme2.h"
+#include "gf_mulx.h"
 
 #define BLOCK_PWR2      4
 #define BLOCK_SIZE      (1 << BLOCK_PWR2)
