@@ -1,5 +1,5 @@
-#ifndef _GF_COMMON_H
-#define _GF_COMMON_H
+#ifndef _GF_MULX_H
+#define _GF_MULX_H
 
 #if defined(__cplusplus)
 extern "C"

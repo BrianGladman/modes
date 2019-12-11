@@ -30,6 +30,7 @@
 
 #include "mode_hdr.h"
 #include "xts.h"
+#include "gf_mulx.h"
 
 UNIT_TYPEDEF(buf_unit, UNIT_BITS);
 BUFR_TYPEDEF(buf_type, UNIT_BITS, AES_BLOCK_SIZE);
