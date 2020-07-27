@@ -20,6 +20,9 @@
     <ClCompile Include="..\eme2.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\gf_mulx.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\genvec.h">

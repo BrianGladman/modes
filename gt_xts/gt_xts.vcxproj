@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\genvec.cpp" />
+    <ClCompile Include="..\gf_mulx.c" />
     <ClCompile Include="..\xts.c" />
     <ClCompile Include="gt_xts.cpp" />
   </ItemGroup>

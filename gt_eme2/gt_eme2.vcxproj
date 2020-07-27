@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClCompile Include="..\eme2.c" />
     <ClCompile Include="..\genvec.cpp" />
+    <ClCompile Include="..\gf_mulx.c" />
     <ClCompile Include="gt_eme2.cpp" />
   </ItemGroup>
   <ItemGroup>
