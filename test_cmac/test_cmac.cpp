@@ -181,7 +181,7 @@ int main(int argc, char *argv[])
 		}
 	}
 	if(err == 0)
-		std::cout << "Incremental message authntication passed" << std::endl << std::endl;
+		std::cout << "Incremental message authentication passed" << std::endl << std::endl;
 
 	return 0;
 }
